@@ -394,6 +394,7 @@ min-height:190px;
 display:flex;
 flex-direction:column;
 transition:.2s;
+position:relative;
 }
 
 .mod:hover{
@@ -402,15 +403,37 @@ border-color:#00bfff88;
 box-shadow:0 0 30px #00bfff18;
 }
 
+.mod-header{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+margin-bottom:14px;
+}
+
 .tag{
 display:inline-block;
-width:max-content;
 padding:4px 8px;
 border:1px solid #244a67;
 border-radius:30px;
-margin-bottom:14px;
 font:12px Consolas;
 color:var(--c);
+}
+
+.btn-delete{
+background:#ff336622;
+border:1px solid #ff336688;
+color:#ff4d7d;
+padding:4px 10px;
+border-radius:6px;
+font-size:12px;
+cursor:pointer;
+transition:.2s;
+}
+
+.btn-delete:hover{
+background:#ff3366;
+color:#fff;
+box-shadow:0 0 10px #ff3366aa;
 }
 
 .mod h3{
@@ -488,6 +511,11 @@ cursor:pointer;
 box-shadow:0 0 25px #00bfff66;
 }
 
+.btn-logout{
+background:linear-gradient(90deg,#ff3366,#cc0033) !important;
+margin-top:10px;
+}
+
 .note{
 color:#75889b;
 font-size:12px;
@@ -550,7 +578,6 @@ opacity:.12;
 
 <body>
 
-<!-- MATRIX -->
 <div class="matrix" aria-hidden="true">
 <span>01010110 01100101 01110010 01110011 01101001 01101111 01101110</span>
 <span>01001101 01001111 01000100 01000100 01001001 01001110 01000111</span>
@@ -561,13 +588,12 @@ opacity:.12;
 <span>11101001 00101101 10101010 01110001 10010110</span>
 <span>FARMING SIMULATOR // MOD ENGINE // ONLINE</span>
 <span>01000011 01001001 01001110 01000001 01010010</span>
-<span>01011001 01000001 01011010 01001001 01001100 01001001 01001101</span>
+<span>01011001 01000001 01011010 01001001 01001101</span>
 <span>00110110 01101111 10100101 01011010 11001010</span>
 <span>SERVER: ONLINE // BUILD: 2026 // STATUS: READY</span>
 <span>10110101 01100110 00110011 11001001 01010101</span>
 </div>
 
-<!-- NAV -->
 <nav>
 
 <a class="brand" href="#anasayfa">
@@ -584,7 +610,6 @@ opacity:.12;
 
 </nav>
 
-<!-- HERO -->
 <header class="hero" id="anasayfa">
 
 <div class="orb"></div>
@@ -630,7 +655,6 @@ Modlara Git →
 </div>
 </header>
 
-<!-- HAKKIMIZDA -->
 <section id="hakkimizda">
 
 <div class="kick">
@@ -653,7 +677,6 @@ FS25 ve FS26 modlarının toplandığı özel mod merkezi.
 
 </section>
 
-<!-- OYUNLAR -->
 <section id="oyunlar">
 
 <div class="kick">
@@ -698,7 +721,6 @@ Farming Simulator <span>Mod Merkezleri</span>
 
 </section>
 
-<!-- MODLAR -->
 <section id="modlar">
 
 <div class="library-head">
@@ -741,13 +763,11 @@ FS26
 
 </div>
 
-<!-- SADECE YÖNETİCİNİN EKLEDİĞİ MODLAR -->
 <div id="mods" class="mods"></div>
 
-<!-- YÖNETİCİ -->
 <div class="admin" id="yonetim">
 
-<details>
+<details id="adminDetails">
 
 <summary>
 ⚙ Yönetici Paneli
@@ -845,11 +865,17 @@ onclick="addMod()"
 + MODU EKLE
 </button>
 
+<button
+class="full btn-logout"
+onclick="logoutAdmin()"
+>
+🚪 Çıkış Yap
+</button>
+
 </div>
 
 <p class="note">
-Eklediğin mod bu tarayıcıda kaydedilir.
-Sayfayı yenilediğinde silinmez.
+Modlar bulut veri tabanına kaydedilir. Sayfayı kim açarsa açsın görebilir.
 </p>
 
 </div>
@@ -860,449 +886,195 @@ Sayfayı yenilediğinde silinmez.
 
 </section>
 
-<!-- FOOTER -->
-
 <footer>
 © 2026 ÇınarFARMİNG MODS — Çınar Biçer · Farming Simulator Mod Sayfası
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
 <script>
+/* =====================================================
+   FIREBASE AYARLARI (SENİN PROJE BİLGİLERİN ENTEGRE EDİLDİ)
+   ===================================================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyDAZjo8pxgr_XEPMVex6Oo0Y3g5p7w8HuI",
+  authDomain: "cinar-farming-mods.firebaseapp.com",
+  projectId: "cinar-farming-mods",
+  storageBucket: "cinar-farming-mods.firebasestorage.app",
+  messagingSenderId: "931627183860",
+  appId: "1:931627183860:web:27294fd985234c15c0f8a1",
+  measurementId: "G-TH25EVMCF9"
+};
+
+// Firebase Başlat
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 /* =====================================================
    MOD SİSTEMİ
    ===================================================== */
-
-/*
-   SADECE YÖNETİCİNİN EKLEDİĞİ MODLAR BURADA TUTULUR.
-*/
-
-let mods = JSON.parse(
-localStorage.getItem("cinarfarming_mods") || "[]"
-);
-
+let mods = [];
 let cur = "ALL";
+let isAdmin = false;
 
-
-/* GÜVENLİ HTML */
+// Verileri Firebase'den Canlı Çek
+db.collection("mods").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+  mods = snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+  render();
+}, error => {
+  console.error("Firebase Veri Çekme Hatası:", error);
+});
 
 function esc(s){
-
-return String(s).replace(
-/[&<>"']/g,
-
-function(x){
-
-return {
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[x];
-
+  return String(s || '').replace(/[&<>"']/g, function(x){
+    return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[x];
+  });
 }
-
-);
-
-}
-
-
-/* MODLARI GÖSTER */
 
 function render(){
+  let list = cur === "ALL" ? mods : mods.filter(x => x.game === cur);
+  const box = document.getElementById("mods");
 
-let list =
-cur === "ALL"
-? mods
-: mods.filter(x => x.game === cur);
+  if(!list.length){
+    box.innerHTML = `
+    <div style="grid-column:1/-1;padding:50px;text-align:center;border:1px dashed #1e4560;border-radius:18px;color:#8ea1b5;">
+      <div style="font-size:40px;margin-bottom:12px;">📦</div>
+      <h3 style="margin-bottom:8px;color:#dcefff">Henüz mod eklenmedi.</h3>
+      <p>Yönetici panelinden mod eklediğinde burada görenecek.</p>
+    </div>`;
+    return;
+  }
 
-const box =
-document.getElementById("mods");
-
-if(!list.length){
-
-box.innerHTML = `
-<div style="
-grid-column:1/-1;
-padding:50px;
-text-align:center;
-border:1px dashed #1e4560;
-border-radius:18px;
-color:#8ea1b5;
-">
-
-<div style="
-font-size:40px;
-margin-bottom:12px;
-">
-📦
-</div>
-
-<h3 style="margin-bottom:8px;color:#dcefff">
-Henüz mod eklenmedi.
-</h3>
-
-<p>
-Yönetici panelinden mod eklediğinde
-burada görünecek.
-</p>
-
-</div>
-`;
-
-return;
-
+  box.innerHTML = list.map(x => `
+  <article class="mod">
+    <div class="mod-header">
+      <span class="tag">${esc(x.game)} · ${esc(x.type)}</span>
+      ${isAdmin ? `<button class="btn-delete" onclick="deleteMod('${x.id}')">🗑️ Sil</button>` : ''}
+    </div>
+    <h3>${esc(x.name)}</h3>
+    <p>${esc(x.description || "Farming Simulator modu")}</p>
+    <a href="${esc(x.url)}" target="_blank" rel="noopener">MODU AÇ →</a>
+  </article>
+  `).join("");
 }
-
-box.innerHTML =
-list.map(x => `
-
-<article class="mod">
-
-<span class="tag">
-${esc(x.game)} · ${esc(x.type)}
-</span>
-
-<h3>
-${esc(x.name)}
-</h3>
-
-<p>
-${esc(x.description || "Farming Simulator modu")}
-</p>
-
-<a
-href="${esc(x.url)}"
-target="_blank"
-rel="noopener"
->
-MODU AÇ →
-</a>
-
-</article>
-
-`).join("");
-
-}
-
-
-/* KATEGORİ */
 
 function filterMods(game,button){
-
-cur = game;
-
-document
-.querySelectorAll(".filters button")
-.forEach(x =>
-x.classList.remove("on")
-);
-
-button.classList.add("on");
-
-render();
-
+  cur = game;
+  document.querySelectorAll(".filters button").forEach(x => x.classList.remove("on"));
+  button.classList.add("on");
+  render();
 }
-
-
-/* OYUN KARTINDAN GELİNCE */
 
 function setGame(game){
-
-cur = game;
-
-document
-.querySelectorAll(".filters button")
-.forEach(button => {
-
-button.classList.toggle(
-"on",
-button.textContent.trim() === game
-);
-
-});
-
-render();
-
+  cur = game;
+  document.querySelectorAll(".filters button").forEach(button => {
+    button.classList.toggle("on", button.textContent.trim() === game);
+  });
+  render();
 }
 
-
 /* =====================================================
-   YÖNETİCİ
+   YÖNETİCİ İŞLEMLERİ
    ===================================================== */
-
 const ADMIN_USERNAME = "FENERBAHÇE03";
-
-const ADMIN_PASSWORD =
-"79946698469767964655bhfh7237vwşxçwhwrscd";
-
-
-/* GİRİŞ */
+const ADMIN_PASSWORD = "79946698469767964655bhfh7237vwşxçwhwrscd";
 
 function loginAdmin(){
+  const user = document.getElementById("adminUser").value.trim();
+  const entered = document.getElementById("adminPass").value;
 
-const user =
-document.getElementById("adminUser").value.trim();
-
-const entered =
-document.getElementById("adminPass").value;
-
-
-if(
-user === ADMIN_USERNAME &&
-entered === ADMIN_PASSWORD
-){
-
-/*
-   Tarayıcıda yönetici girişi hatırlanır.
-*/
-
-localStorage.setItem(
-"cinarfarming_admin",
-"1"
-);
-
-document.getElementById(
-"loginBox"
-).style.display = "none";
-
-document.getElementById(
-"adminPanel"
-).style.display = "block";
-
-alert("✅ Yönetici girişi başarılı!");
-
+  if(user === ADMIN_USERNAME && entered === ADMIN_PASSWORD){
+    localStorage.setItem("cinarfarming_admin", "1");
+    isAdmin = true;
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+    render();
+    alert("✅ Yönetici girişi başarılı!");
+  } else {
+    alert("❌ Kullanıcı adı veya şifre yanlış.");
+    document.getElementById("adminPass").value = "";
+  }
 }
-
-else{
-
-alert(
-"❌ Kullanıcı adı veya şifre yanlış."
-);
-
-document.getElementById(
-"adminPass"
-).value = "";
-
-}
-
-}
-
-
-/* YÖNETİCİYİ HATIRLA */
 
 function restoreAdmin(){
-
-if(
-localStorage.getItem("cinarfarming_admin")
-===
-"1"
-){
-
-document.getElementById(
-"loginBox"
-).style.display = "none";
-
-document.getElementById(
-"adminPanel"
-).style.display = "block";
-
+  if(localStorage.getItem("cinarfarming_admin") === "1"){
+    isAdmin = true;
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+  }
 }
 
+function logoutAdmin(){
+  localStorage.removeItem("cinarfarming_admin");
+  isAdmin = false;
+  document.getElementById("loginBox").style.display = "block";
+  document.getElementById("adminPanel").style.display = "none";
+  document.getElementById("adminUser").value = "";
+  document.getElementById("adminPass").value = "";
+  render();
+  alert("🚪 Yönetici çıkışı yapıldı.");
 }
-
 
 /* =====================================================
-   MOD EKLE
+   MOD EKLE & SİL (FIREBASE)
    ===================================================== */
+async function addMod(){
+  const nameEl = document.getElementById("name");
+  const gameEl = document.getElementById("game");
+  const typeEl = document.getElementById("type");
+  const urlEl = document.getElementById("url");
 
-function addMod(){
+  const name = nameEl.value.trim();
+  const game = gameEl.value;
+  const type = typeEl.value;
+  const url = urlEl.value.trim();
 
-const nameEl =
-document.getElementById("name");
+  if(!name){ alert("❌ Mod adını yaz kral."); nameEl.focus(); return; }
+  if(!url){ alert("❌ Mod bağlantısını yaz kral."); urlEl.focus(); return; }
+  if(!/^https?:\/\//i.test(url)){ alert("❌ Link https:// veya http:// ile başlamalı."); urlEl.focus(); return; }
 
-const gameEl =
-document.getElementById("game");
+  try {
+    await db.collection("mods").add({
+      name: name,
+      game: game,
+      type: type,
+      url: url,
+      description: game + " için " + type + " modu.",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
 
-const typeEl =
-document.getElementById("type");
+    nameEl.value = "";
+    urlEl.value = "";
+    cur = game;
 
-const urlEl =
-document.getElementById("url");
+    document.querySelectorAll(".filters button").forEach(button => {
+      button.classList.toggle("on", button.textContent.trim() === game);
+    });
 
-
-const name =
-nameEl.value.trim();
-
-const game =
-gameEl.value;
-
-const type =
-typeEl.value;
-
-const url =
-urlEl.value.trim();
-
-
-/* MOD ADI */
-
-if(!name){
-
-alert(
-"❌ Mod adını yaz kral."
-);
-
-nameEl.focus();
-
-return;
-
+    alert("✅ " + game + " modu başarıyla eklendi ve tüm dünyada yayınlandı!");
+  } catch (error) {
+    alert("❌ Mod eklenirken hata oluştu: " + error.message);
+  }
 }
 
+async function deleteMod(id){
+  if(!isAdmin){ alert("❌ Bu işlemi yapmaya yetkiniz yok!"); return; }
 
-/* LİNK */
-
-if(!url){
-
-alert(
-"❌ Mod bağlantısını yaz kral."
-);
-
-urlEl.focus();
-
-return;
-
+  if(confirm("Bu modu silmek istediğinizden emin misiniz?")){
+    try {
+      await db.collection("mods").doc(id).delete();
+      alert("🗑️ Mod başarıyla silindi!");
+    } catch (error) {
+      alert("❌ Silinirken hata oluştu: " + error.message);
+    }
+  }
 }
-
-
-/* LİNK KONTROL */
-
-if(
-!/^https?:\/\//i.test(url)
-){
-
-alert(
-"❌ Link https:// veya http:// ile başlamalı."
-);
-
-urlEl.focus();
-
-return;
-
-}
-
-
-/* MODU KAYDET */
-
-const newMod = {
-
-id:Date.now(),
-
-name:name,
-
-game:game,
-
-type:type,
-
-url:url,
-
-description:
-game + " için " + type + " modu."
-
-};
-
-
-mods.unshift(newMod);
-
-
-/* LOCAL STORAGE */
-
-localStorage.setItem(
-"cinarfarming_mods",
-JSON.stringify(mods)
-);
-
-
-/* FORMU TEMİZLE */
-
-nameEl.value = "";
-urlEl.value = "";
-
-
-/* EKLENEN OYUNA GEÇ */
-
-cur = game;
-
-
-/* FİLTRE BUTONUNU GÜNCELLE */
-
-document
-.querySelectorAll(".filters button")
-.forEach(button => {
-
-button.classList.toggle(
-"on",
-button.textContent.trim() === game
-);
-
-});
-
-
-/* MODLARI YENİLE */
-
-render();
-
-
-alert(
-"✅ " +
-game +
-" modu başarıyla eklendi!"
-);
-
-}
-
-
-/* =====================================================
-   İLK AÇILIŞ
-   ===================================================== */
-
-/*
-   ESKİ SÜRÜMDEKİ ÖRNEK MODLARIN KALINTILARI
-   TEMİZLENİYOR.
-
-   ÖNEMLİ:
-   Yeni eklediğin gerçek modlara dokunulmaz.
-*/
-
-localStorage.removeItem(
-"cinaryazilim_mods"
-);
-
-localStorage.removeItem(
-"cinarfarmingmods_fs25"
-);
-
-
-/*
-   Yukarıdaki iki eski veri alanını temizledikten
-   sonra yeni sistemdeki gerçek modları kullan.
-*/
-
-mods =
-JSON.parse(
-localStorage.getItem("cinarfarming_mods") || "[]"
-);
-
-
-/* SAYFAYI OLUŞTUR */
-
-render();
-
-
-/* YÖNETİCİYİ HATIRLA */
 
 restoreAdmin();
-
 </script>
 
 </body>
