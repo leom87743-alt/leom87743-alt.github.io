@@ -10,7 +10,7 @@
 :root{--bg:#070b10;--p:#0e1721;--p2:#101c28;--t:#eef7ff;--m:#91a2b5;--l:#1d3042;--b:#00b7ff;--c:#21e6ff;--v:#8a5cff}
 *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
 body{font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--t);background:radial-gradient(circle at 85% 10%,#315cff20,transparent 28%),radial-gradient(circle at 5% 30%,#00c8ff12,transparent 25%),var(--bg);overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(#fff006 1px,transparent 1px),linear-gradient(90deg,#fff006 1px,transparent 1px);background-size:55px 55px}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,#00111b55,transparent 65%);z-index:-1}
 nav{height:76px;position:fixed;z-index:9;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:#070b10dd;backdrop-filter:blur(16px);border-bottom:1px solid var(--l)}
 .brand{font-weight:900;letter-spacing:2px;text-decoration:none}.brand i{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--b),var(--v));font-style:normal;margin-right:10px}.brand span{color:var(--b)}
 nav .links{display:flex;gap:25px}nav a{color:#aab9c9;text-decoration:none;font-size:14px}nav a:hover{color:var(--c)}
@@ -26,14 +26,74 @@ section{max-width:1500px;margin:auto;padding:100px 6%}.kick{font:12px Consolas;c
 .admin{margin-top:25px;padding:25px;border:1px dashed #31506b;border-radius:16px;background:#08111a}.admin summary{cursor:pointer;color:#bdefff;font-weight:800}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}input,select{width:100%;padding:12px;border-radius:8px;border:1px solid #24384b;background:#071019;color:#fff;outline:none}.full{grid-column:1/-1}.admin button{padding:11px 15px;border:0;border-radius:8px;background:linear-gradient(90deg,var(--b),var(--v));color:#fff;font-weight:800;cursor:pointer}.note{color:#75889b;font-size:12px;margin-top:12px}
 footer{text-align:center;border-top:1px solid var(--l);padding:30px 6%;color:#64768a}
 @media(max-width:850px){.games,.mods{grid-template-columns:1fr 1fr}}@media(max-width:600px){nav .links{display:none}.games,.mods,.form{grid-template-columns:1fr}.full{grid-column:auto}h1{letter-spacing:-4px}.title{font-size:36px}}
+
+/* ÇINARYAZILIM NEON BLUE OVERRIDE */
+:root{--b:#00bfff;--c:#39eaff;--v:#1976ff}
+body{background:radial-gradient(circle at 85% 10%,#0077ff2b,transparent 30%),radial-gradient(circle at 10% 35%,#00d9ff18,transparent 28%),#03070c}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;box-shadow:inset 0 0 180px #008cff14}
+.brand i{background:linear-gradient(135deg,#00bfff,#005cff);box-shadow:0 0 30px #00bfff80}
+h1 span{background:linear-gradient(90deg,#00bfff,#4ff3ff,#1687ff);-webkit-background-clip:text;color:transparent}
+.btn:hover,.game:hover{box-shadow:0 0 35px #00bfff35,0 20px 50px #0008}
+
+
+.matrix{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;opacity:.24}
+.matrix span{position:absolute;top:-120%;color:#00ff66;font:13px/1.35 Consolas,monospace;writing-mode:vertical-rl;text-shadow:0 0 8px #00ff6688;animation:fall linear infinite}
+.matrix span:nth-child(1){left:3%;animation-duration:9s}.matrix span:nth-child(2){left:9%;animation-duration:13s;animation-delay:-5s}
+.matrix span:nth-child(3){left:16%;animation-duration:10s;animation-delay:-2s}.matrix span:nth-child(4){left:24%;animation-duration:15s;animation-delay:-8s}
+.matrix span:nth-child(5){left:31%;animation-duration:11s;animation-delay:-4s}.matrix span:nth-child(6){left:39%;animation-duration:14s;animation-delay:-10s}
+.matrix span:nth-child(7){left:47%;animation-duration:9s;animation-delay:-3s}.matrix span:nth-child(8){left:55%;animation-duration:12s;animation-delay:-7s}
+.matrix span:nth-child(9){left:63%;animation-duration:16s;animation-delay:-11s}.matrix span:nth-child(10){left:71%;animation-duration:10s;animation-delay:-1s}
+.matrix span:nth-child(11){left:79%;animation-duration:14s;animation-delay:-6s}.matrix span:nth-child(12){left:87%;animation-duration:11s;animation-delay:-9s}
+.matrix span:nth-child(13){left:94%;animation-duration:15s;animation-delay:-4s}
+@keyframes fall{0%{transform:translateY(-10vh);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(120vh);opacity:0}}
+.hacker-text{position:absolute;right:6%;bottom:10%;width:min(390px,38vw);font:12px/1.65 Consolas,monospace;color:#159cffaa;filter:drop-shadow(0 0 8px #008cff44);text-align:left}
+.hacker-text .green{color:#00ff66}.cursor{display:inline-block;width:8px;height:14px;background:#00bfff;vertical-align:-2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+@media(max-width:700px){.hacker-text{display:none}.matrix{opacity:.14}}
+
+
+/* HERO TYPOGRAPHY - CINAR BICER */
+.hero-name{font-family:"Trebuchet MS",Impact,Arial,sans-serif;font-weight:900;letter-spacing:-5px;text-transform:uppercase;position:relative;text-shadow:0 0 8px #00bfff,0 0 24px #00bfff88,0 0 55px #0077ff66}
+.hero-name:after{content:"ÇINAR BİÇER";position:absolute;inset:0;color:transparent;-webkit-text-stroke:1px #63edff;filter:blur(1px);opacity:.8;animation:pulseGlow 2.4s ease-in-out infinite}
+.hero-sub{color:#8eefff!important;text-shadow:0 0 12px #00bfff66}
+@keyframes pulseGlow{0%,100%{opacity:.55;filter:blur(1px)}50%{opacity:1;filter:blur(3px)}}
+
+.scanline{position:absolute;left:0;right:0;top:52%;height:1px;background:#21e6ff;box-shadow:0 0 18px #00bfff,0 0 45px #008cff;opacity:.35;animation:scan 4s linear infinite;pointer-events:none}
+@keyframes scan{0%{transform:translateY(-220px);opacity:0}15%{opacity:.5}50%{opacity:.3}85%{opacity:.5}100%{transform:translateY(220px);opacity:0}}
 </style>
 </head>
 <body>
+<div class="matrix" aria-hidden="true">
+<span>01010110 01100101 01110010 01110011 01101001 01101111 01101110</span>
+<span>01001101 01001111 01000100 01000100 01001001 01001110 01000111</span>
+<span>10101010 00110101 11001001 01010101 11100010 01001010</span>
+<span>FS20 FS23 FS26 MOD MAP VEHICLE EQUIPMENT XML LUA</span>
+<span>01010011 01011001 01010011 01010100 01000101 01001101</span>
+<span>CHINAR SOFTWARE 00110100 11010101 01010110</span>
+<span>11101001 00101101 10101010 01110001 10010110</span>
+<span>FARMING SIMULATOR // MOD ENGINE // ONLINE</span>
+<span>01000011 01001001 01001110 01000001 01010010</span>
+<span>01011001 01000001 01011010 01001001 01001100 01001001 01001101</span>
+<span>00110110 01101111 10100101 01011010 11001010</span>
+<span>SERVER: ONLINE // BUILD: 2026 // STATUS: READY</span>
+<span>10110101 01100110 00110011 11001001 01010101</span>
+</div>
+
 <nav><a class="brand" href="#anasayfa"><i>Ç</i><b><span>ÇINAR</span>YAZILIM</b></a><div class="links"><a href="#hakkimizda">Hakkımızda</a><a href="#oyunlar">Oyunlar</a><a href="#modlar">Modlar</a><a href="#yonetim">Yönetim</a></div></nav>
 
-<header class="hero" id="anasayfa"><div class="orb"></div><div>
+<header class="hero" id="anasayfa"><div class="orb"></div><div class="scanline" aria-hidden="true"></div>
+<div class="hacker-text">
+<span class="green">[SYSTEM]</span> ÇINARYAZILIM CORE ONLINE<br>
+<span class="green">[STATUS]</span> MOD ENGINE: ONLINE<br>
+<span>[SCAN]</span> FS20 / FS23 / FS26 detected<br>
+<span>[LOAD]</span> MAP • VEHICLE • EQUIPMENT<br>
+<span>[ACCESS]</span> FENERBAHÇE03 // ADMIN<br>
+<span>[NETWORK]</span> SECURE CONNECTION<br>
+<span class="green">[READY]</span> Waiting for next project... <span class="cursor"></span>
+</div>
+<div>
 <div class="term">&gt; ÇINARYAZILIM / farming.simulator.modding</div>
-<h1>Çınar <span>Biçer</span></h1><h2>Farming Simulator Mod Geliştirici</h2>
+<h1 class="hero-name">Çınar <span>Biçer</span></h1><h2 class="hero-sub">Farming Simulator Mod Geliştirici</h2>
 <p>FS20, FS23 ve FS26 için harita, araç, ekipman ve daha birçok özel modun bulunduğu ÇINARYAZILIM platformu.</p>
 <a class="btn" href="#oyunlar">Modlara Git →</a><a class="btn" href="#hakkimizda">ÇINARYAZILIM</a>
 </div></header>
@@ -48,11 +108,26 @@ footer{text-align:center;border-top:1px solid var(--l);padding:30px 6%;color:#64
 
 <section id="modlar"><div class="head"><div><div class="kick">03 / MODLAR</div><h2 class="title">Mod <span>Kütüphanesi</span></h2></div><div class="filters"><button class="on" onclick="filterMods('ALL',this)">Tümü</button><button onclick="filterMods('FS20',this)">FS20</button><button onclick="filterMods('FS23',this)">FS23</button><button onclick="filterMods('FS26',this)">FS26</button></div></div>
 <div id="mods" class="mods"></div>
-<details class="admin" id="yonetim"><summary>⚙ Yönetici Paneli — Mod Linki Ekle</summary><div class="form">
+<div class="admin" id="yonetim">
+<details>
+<summary>⚙ Yönetici Paneli</summary>
+<div id="loginBox">
+<p style="color:var(--m);margin:14px 0">Yönetici alanına erişmek için şifreyi gir.</p>
+<div class="form">
+<input id="adminUser" placeholder="Kullanıcı adı">
+<input id="adminPass" type="password" placeholder="Yönetici şifresi">
+<button class="full" onclick="loginAdmin()">🔐 Giriş Yap</button>
+</div>
+</div>
+<div id="adminPanel" style="display:none">
+<div class="form">
 <input id="name" placeholder="Mod adı"><select id="game"><option>FS20</option><option>FS23</option><option>FS26</option></select>
 <input id="type" placeholder="Tür: Araç / Harita / Ekipman"><input id="url" class="full" placeholder="Mod bağlantısı: https://...">
-<button class="full" onclick="addMod()">+ Modu Ekle</button></div>
-<p class="note">Bu GitHub Pages sürümünde eklenen bağlantılar tarayıcının yerel hafızasında tutulur. Herkese kalıcı görünmesi için ileride veritabanı/backend bağlanabilir.</p></details></section>
+<button class="full" onclick="addMod()">+ Modu Ekle</button>
+</div>
+<p class="note">Yönetici oturumu bu tarayıcıda açık kalır. Çıkış yapmak için sayfayı kapatabilir veya tarayıcı verilerini temizleyebilirsin.</p>
+</div>
+</details></div></section>
 <footer>© 2026 ÇINARYAZILIM — Çınar Biçer · Farming Simulator Mod Platformu</footer>
 
 <script>
@@ -65,8 +140,29 @@ const esc=s=>String(s).replace(/[&<>"']/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;"
 function render(){let a=cur==="ALL"?mods:mods.filter(x=>x.game===cur);document.getElementById("mods").innerHTML=a.length?a.map(x=>`<article class="mod"><span class="tag">${esc(x.game)} · ${esc(x.type)}</span><h3>${esc(x.name)}</h3><p>ÇINARYAZILIM mod kütüphanesi.</p><a href="${/^https?:\/\//i.test(x.url)?esc(x.url):"#"}" target="_blank">Modu Aç →</a></article>`).join(""):"<p>Bu kategoride henüz mod yok.</p>"}
 function filterMods(g,b){cur=g;document.querySelectorAll(".filters button").forEach(x=>x.classList.remove("on"));b.classList.add("on");render()}
 function setGame(g){cur=g;setTimeout(()=>{document.querySelectorAll(".filters button").forEach(x=>x.classList.toggle("on",x.textContent===g));render()},50)}
+const ADMIN_USERNAME="FENERBAHÇE03";
+const ADMIN_PASSWORD="79946698469767964655bhfh7237vwşxçwhwrscd";
+function loginAdmin(){
+  const user=document.getElementById("adminUser").value;
+  const entered=document.getElementById("adminPass").value;
+  if(user===ADMIN_USERNAME && entered===ADMIN_PASSWORD){
+    localStorage.setItem("cinaryazilim_admin","1");
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("adminPanel").style.display="block";
+  }else{
+    alert("Kullanıcı adı veya şifre yanlış.");
+    document.getElementById("adminPass").value="";
+  }
+}
+function restoreAdmin(){
+  if(localStorage.getItem("cinaryazilim_admin")==="1"){
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("adminPanel").style.display="block";
+  }
+}
 function addMod(){let n=name.value.trim(),g=game.value,t=type.value.trim()||"Mod",u=url.value.trim();if(!n||!u)return alert("Mod adı ve bağlantı gerekli.");if(!/^https?:\/\//i.test(u))return alert("Bağlantı https:// veya http:// ile başlamalı.");mods.unshift({name:n,game:g,type:t,url:u});localStorage.setItem("cinaryazilim_mods",JSON.stringify(mods));name.value=type.value=url.value="";cur="ALL";render()}
 render();
+restoreAdmin();
 </script>
 </body>
 </html>
