@@ -125,7 +125,7 @@ h1 span{background:linear-gradient(90deg,#00bfff,#4ff3ff,#1687ff);-webkit-backgr
 <input id="type" placeholder="Tür: Araç / Harita / Ekipman"><input id="url" class="full" placeholder="Mod bağlantısı: https://...">
 <button class="full" onclick="addMod()">+ Modu Ekle</button>
 </div>
-<p class="note">Yönetici oturumu bu tarayıcıda açık kalır. Çıkış yapmak için sayfayı kapatabilir veya tarayıcı verilerini temizleyebilirsin.</p>
+<p class="note">Eklediğin mod bu tarayıcıda kaydedilir ve sayfayı yenileyince kaybolmaz.</p>
 </div>
 </details></div></section>
 <footer>© 2026 ÇINARYAZILIM — Çınar Biçer · Farming Simulator Mod Platformu</footer>
@@ -160,7 +160,49 @@ function restoreAdmin(){
     document.getElementById("adminPanel").style.display="block";
   }
 }
-function addMod(){let n=name.value.trim(),g=game.value,t=type.value.trim()||"Mod",u=url.value.trim();if(!n||!u)return alert("Mod adı ve bağlantı gerekli.");if(!/^https?:\/\//i.test(u))return alert("Bağlantı https:// veya http:// ile başlamalı.");mods.unshift({name:n,game:g,type:t,url:u});localStorage.setItem("cinaryazilim_mods",JSON.stringify(mods));name.value=type.value=url.value="";cur="ALL";render()}
+function addMod(){
+  const nameEl=document.getElementById("name");
+  const gameEl=document.getElementById("game");
+  const typeEl=document.getElementById("type");
+  const urlEl=document.getElementById("url");
+
+  const n=nameEl.value.trim();
+  const g=gameEl.value;
+  const t=typeEl.value.trim() || "Mod";
+  const u=urlEl.value.trim();
+
+  if(!n){
+    alert("Mod adını yaz kral.");
+    nameEl.focus();
+    return;
+  }
+  if(!u){
+    alert("Mod linkini yaz kral.");
+    urlEl.focus();
+    return;
+  }
+  if(!/^https?:\/\//i.test(u)){
+    alert("Link https:// veya http:// ile başlamalı.");
+    urlEl.focus();
+    return;
+  }
+
+  mods.unshift({name:n,game:g,type:t,url:u});
+  localStorage.setItem("cinaryazilim_mods",JSON.stringify(mods));
+
+  nameEl.value="";
+  typeEl.value="";
+  urlEl.value="";
+  cur="ALL";
+
+  document.querySelectorAll(".filters button").forEach(x=>{
+    x.classList.toggle("on",x.textContent==="Tümü");
+  });
+
+  render();
+  alert("✅ Mod başarıyla eklendi!");
+}
+
 render();
 restoreAdmin();
 </script>
