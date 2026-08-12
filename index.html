@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ÇınarFARMİNG MODS | Farming Simulator MOD MERKEZİ</title>
+<title>ÇınarFARMİNG MODS | FS25 MOD MERKEZİ</title>
 <meta name="description" content="ÇINARYAZILIM - Çınar Biçer. Farming Simulator FS20, FS23 ve FS26 için harita, araç, ekipman ve modlar.">
 <meta name="keywords" content="ÇINARYAZILIM, Çınar Biçer, Farming Simulator, FS20, FS23, FS26, mod, harita, araç, ekipman">
 <style>
@@ -118,13 +118,13 @@ h1 span{background:linear-gradient(90deg,#ffd500,#fff3a1,#123a8f);-webkit-backgr
 <span class="green">[STATUS]</span> MOD ENGINE: ONLINE<br>
 <span>[SCAN]</span> FS20 / FS23 / FS26 detected<br>
 <span>[LOAD]</span> MAP • VEHICLE • EQUIPMENT<br>
-<span>[ACCESS]</span> ÇINARBİÇER // ADMIN<br>
+<span>[ACCESS]</span> FENERBAHÇE03 // ADMIN<br>
 <span>[NETWORK]</span> SECURE CONNECTION<br>
 <span class="green">[READY]</span> Waiting for next project... <span class="cursor"></span>
 </div>
 <div>
 <div class="term">&gt; ÇINARYAZILIM / farming.simulator.modding</div>
-<h1 class="hero-name">Çınar <span>Biçer</span></h1><h2>FS25 Mod Kütüphanesi</h2>
+<h1 class="hero-name">Çınar <span>Biçer</span></h1><h2>Farming Simulator Mod Merkezi</h2>
 <p>Farming Simulator modları için Mobil & PC platformu. FS20, FS23 ve FS26 modlarını tek yerde keşfet, linke tıkla ve indir.</p>
 <a class="btn" href="#oyunlar">Modlara Git →</a><a class="btn" href="#hakkimizda">ÇINARYAZILIM</a>
 </div></header>
@@ -152,7 +152,7 @@ h1 span{background:linear-gradient(90deg,#ffd500,#fff3a1,#123a8f);-webkit-backgr
 </div>
 <div id="adminPanel" style="display:none">
 <div class="form">
-<input id="name" placeholder="Mod adı"><input id="game" value="FS25" readonly>
+<input id="name" placeholder="Mod adı"><select id="game"><option value="FS20">FS20</option><option value="FS23">FS23</option><option value="FS25" selected>FS25</option><option value="FS26">FS26</option></select>
 <input id="type" placeholder="Tür: Araç / Harita / Ekipman"><input id="url" class="full" placeholder="Mod bağlantısı: https://...">
 <button class="full" onclick="addMod()">+ Modu Ekle</button>
 </div>
@@ -162,7 +162,7 @@ h1 span{background:linear-gradient(90deg,#ffd500,#fff3a1,#123a8f);-webkit-backgr
 
 <section class="fs-centers">
   <div class="section-kicker">02 / OYUNLAR</div>
-  <h2>Farming Simulator <span>Mod Merkezleri</span></h2>
+  <h2>Farming Simulator25 <span>Mod Merkezi</span></h2>
 
   <div class="game-card-grid">
     <a class="game-card fs25-card" href="#fs25mods" onclick="showFS25Mods(); return false;">
@@ -241,7 +241,7 @@ function addMod(){
   const urlEl=document.getElementById("url");
 
   const n=nameEl.value.trim();
-  const g="FS25";
+  const g=gameEl.value;
   const t=typeEl.value.trim() || "Mod";
   const u=urlEl.value.trim();
 
