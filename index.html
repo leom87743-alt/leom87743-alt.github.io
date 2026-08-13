@@ -111,8 +111,10 @@ max-width:1500px;
 margin:auto;
 display:flex;
 align-items:center;
+justify-content:space-between;
 padding:130px 6% 80px;
 position:relative;
+gap:40px;
 }
 
 .orb{
@@ -176,6 +178,62 @@ border-color:var(--c);
 box-shadow:0 0 28px #00b7ff35;
 }
 
+.hero-right-container{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:30px;
+position:relative;
+z-index:2;
+}
+
+.neon-banner{
+position:relative;
+width:min(420px, 90vw);
+padding:25px 20px;
+text-align:center;
+background:rgba(5, 8, 18, 0.45);
+border-radius:16px;
+border:1px solid rgba(0, 191, 255, 0.3);
+box-shadow:0 0 30px rgba(0, 191, 255, 0.15), inset 0 0 15px rgba(0, 191, 255, 0.1);
+backdrop-filter:blur(8px);
+}
+
+.neon-text{
+font-family:Inter, Segoe UI, sans-serif;
+font-weight:900;
+font-size:clamp(24px, 4vw, 36px);
+letter-spacing:3px;
+color:#e6f9ff;
+text-transform:uppercase;
+text-shadow:
+0 0 5px rgba(0, 191, 255, 0.6),
+0 0 12px rgba(0, 191, 255, 0.5),
+0 0 25px rgba(25, 118, 255, 0.4),
+0 0 45px rgba(0, 191, 255, 0.3);
+animation:neonGlow 3s ease-in-out infinite alternate;
+line-height:1.3;
+}
+
+@keyframes neonGlow{
+0%{
+text-shadow:
+0 0 4px rgba(0, 191, 255, 0.5),
+0 0 10px rgba(0, 191, 255, 0.4),
+0 0 20px rgba(25, 118, 255, 0.3);
+opacity:0.95;
+}
+100%{
+text-shadow:
+0 0 7px rgba(57, 234, 255, 0.8),
+0 0 16px rgba(0, 191, 255, 0.7),
+0 0 32px rgba(25, 118, 255, 0.5),
+0 0 50px rgba(0, 191, 255, 0.4);
+opacity:1;
+}
+}
+
 section{
 max-width:1500px;
 margin:auto;
@@ -214,8 +272,6 @@ max-width:1050px;
 .about strong{
 color:#fff;
 }
-
-/* MATRIX */
 
 .matrix{
 position:fixed;
@@ -263,17 +319,17 @@ opacity:0
 }
 }
 
-/* HACKER TEXT */
-
 .hacker-text{
-position:absolute;
-right:6%;
-bottom:10%;
-width:min(390px,38vw);
+position:relative;
+width:min(360px,85vw);
 font:12px/1.65 Consolas,monospace;
 color:#75dfffaa;
 filter:drop-shadow(0 0 8px #008cff44);
 text-align:left;
+background:rgba(5, 8, 18, 0.7);
+padding:14px;
+border-radius:10px;
+border:1px solid rgba(0, 191, 255, 0.25);
 }
 
 .hacker-text .green{
@@ -292,8 +348,6 @@ animation:blink 1s steps(2) infinite;
 @keyframes blink{
 50%{opacity:0}
 }
-
-/* GAMES */
 
 .games{
 display:grid;
@@ -342,8 +396,6 @@ bottom:22px;
 color:var(--c);
 font-size:22px;
 }
-
-/* MOD LIBRARY */
 
 .library{
 margin-top:30px;
@@ -453,8 +505,6 @@ text-decoration:none;
 font-weight:700;
 }
 
-/* ADMIN */
-
 .admin{
 margin-top:30px;
 padding:25px;
@@ -522,8 +572,6 @@ font-size:12px;
 margin-top:12px;
 }
 
-/* FOOTER */
-
 footer{
 text-align:center;
 border-top:1px solid var(--l);
@@ -531,9 +579,15 @@ padding:30px 6%;
 color:#64768a;
 }
 
-/* RESPONSIVE */
-
 @media(max-width:950px){
+.hero{
+flex-direction:column;
+text-align:center;
+padding-top:100px;
+}
+.hero p{
+margin:20px auto 28px;
+}
 .games,
 .mods{
 grid-template-columns:1fr 1fr;
@@ -562,10 +616,6 @@ letter-spacing:-4px;
 
 .title{
 font-size:36px;
-}
-
-.hacker-text{
-display:none;
 }
 
 .matrix{
@@ -614,16 +664,6 @@ opacity:.12;
 
 <div class="orb"></div>
 
-<div class="hacker-text">
-<span class="green">[SYSTEM]</span> ÇINAR FARMING CORE ONLINE<br>
-<span class="green">[STATUS]</span> MOD ENGINE: ONLINE<br>
-<span>[SCAN]</span> FS20 / FS22 / FS23 / FS25 / FS26<br>
-<span>[LOAD]</span> MAP • VEHICLE • EQUIPMENT<br>
-<span>[ACCESS]</span> ADMIN PANEL READY<br>
-<span>[NETWORK]</span> SECURE CONNECTION<br>
-<span class="green">[READY]</span> Waiting for mods... <span class="cursor"></span>
-</div>
-
 <div>
 
 <div class="term">
@@ -653,6 +693,23 @@ Modlara Git →
 </a>
 
 </div>
+
+<div class="hero-right-container">
+  <div class="neon-banner">
+    <div class="neon-text">BİZ HER ZAMAN LİDERİZ</div>
+  </div>
+
+  <div class="hacker-text">
+    <span class="green">[SYSTEM]</span> ÇINAR FARMING CORE ONLINE<br>
+    <span class="green">[STATUS]</span> MOD ENGINE: ONLINE<br>
+    <span>[SCAN]</span> FS20 / FS22 / FS23 / FS25 / FS26<br>
+    <span>[LOAD]</span> MAP • VEHICLE • EQUIPMENT<br>
+    <span>[ACCESS]</span> ADMIN PANEL READY<br>
+    <span>[NETWORK]</span> SECURE CONNECTION<br>
+    <span class="green">[READY]</span> Waiting for mods... <span class="cursor"></span>
+  </div>
+</div>
+
 </header>
 
 <section id="hakkimizda">
@@ -909,9 +966,6 @@ Modlar bulut veri tabanına kaydedilir. Sayfayı kim açarsa açsın görebilir.
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
 <script>
-/* =====================================================
-   FIREBASE AYARLARI (SENİN PROJE BİLGİLERİN ENTEGRE EDİLDİ)
-   ===================================================== */
 const firebaseConfig = {
   apiKey: "AIzaSyDAZjo8pxgr_XEPMVex6Oo0Y3g5p7w8HuI",
   authDomain: "cinar-farming-mods.firebaseapp.com",
@@ -922,18 +976,13 @@ const firebaseConfig = {
   measurementId: "G-TH25EVMCF9"
 };
 
-// Firebase Başlat
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* =====================================================
-   MOD SİSTEMİ
-   ===================================================== */
 let mods = [];
 let cur = "ALL";
 let isAdmin = false;
 
-// Verileri Firebase'den Canlı Çek
 db.collection("mods").orderBy("createdAt", "desc").onSnapshot(snapshot => {
   mods = snapshot.docs.map(doc => ({
     id: doc.id,
@@ -992,9 +1041,6 @@ function setGame(game){
   render();
 }
 
-/* =====================================================
-   YÖNETİCİ İŞLEMLERİ
-   ===================================================== */
 const ADMIN_USERNAME = "FENERBAHÇE03";
 const ADMIN_PASSWORD = "79946698469767964655bhfh7237vwşxçwhwrscd";
 
@@ -1034,9 +1080,6 @@ function logoutAdmin(){
   alert("🚪 Yönetici çıkışı yapıldı.");
 }
 
-/* =====================================================
-   MOD EKLE & SİL (FIREBASE)
-   ===================================================== */
 async function addMod(){
   const nameEl = document.getElementById("name");
   const gameEl = document.getElementById("game");
